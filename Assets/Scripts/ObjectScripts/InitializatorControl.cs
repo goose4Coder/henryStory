@@ -41,7 +41,9 @@ public class InitializatorControl : MonoBehaviour
     void Start()
     {
         toInitialize = new List<IInitializable>();
-        GameObject.Find("Player");
+        PrepareDefaultObjects();
+        PrepareAdditionalObjects();
+        InitializeObjects();
 
     }
 }
