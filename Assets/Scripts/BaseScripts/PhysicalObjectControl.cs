@@ -8,6 +8,7 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
     protected Vector2 upperSpeedLimit;
     protected Vector2 lowerSpeedLimit;
     protected Vector2 stoppingForce;
+    protected bool isSpeedApplied = false;
     public override void Initialize(int initializedInOrder)
     {
         base.Initialize(initializedInOrder);
@@ -36,7 +37,8 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
 
     }
 
-    protected virtual void DoPhysics()
+
+    protected void LimitSpeed()
     {
         Vector2 addSpeed = new Vector2();
         float xToCorrect = 0;
@@ -65,6 +67,44 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
 
         addSpeed = new Vector2(xToCorrect, yToCorrect);
         ApplyVelocity(addSpeed);
+    }
+    protected void StopWithoutAppliedSpeed()
+    {
+        Vector2 addSpeed = new Vector2();
+        float xToCorrect = 0;
+        float yToCorrect = 0;
+        if (isSpeedApplied == false)
+        {
+            if (currentRigidBody.velocity.x != 0)
+            {
+                if (currentRigidBody.velocity.x > 0)
+                {
+                    xToCorrect = -stoppingForce.x;
+                }
+                else
+                {
+                    xToCorrect = stoppingForce.x;
+                }
+            }
+            if (currentRigidBody.velocity.y != 0)
+            {
+                if (currentRigidBody.velocity.y > 0)
+                {
+                    yToCorrect = -stoppingForce.y;
+                }
+                else
+                {
+                    yToCorrect = stoppingForce.y;
+                }
+            }
+        }
+        ApplyVelocity(addSpeed);
+    }
+
+    protected virtual void DoPhysics()
+    {
+        LimitSpeed();
+
     }
 
     protected virtual void DoOtherStuff()
