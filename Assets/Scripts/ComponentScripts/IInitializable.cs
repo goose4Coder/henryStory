@@ -3,10 +3,10 @@ using UnityEngine;
 public interface IInitializable 
 {
     // Start is called before the first frame update
-    public void Initialize(int initializedInOrder)
+    public virtual void Initialize(int initializedInOrder)
     {
         
-        Debug.Log("No defined interface at: "+ initializedInOrder.ToString());
+        Debug.Log("No defined init interface at: "+ initializedInOrder.ToString());
     }
 
 }
