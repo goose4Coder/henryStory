@@ -8,7 +8,8 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
     protected Vector2 upperSpeedLimit;
     protected Vector2 lowerSpeedLimit;
     protected Vector2 stoppingForce;
-    protected bool isSpeedApplied = false;
+    protected bool isXSpeedApplied = false;
+    protected bool isYSpeedApplied = false;
     public override void Initialize(int initializedInOrder)
     {
         base.Initialize(initializedInOrder);
@@ -19,22 +20,7 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
     {
         Vector2 addSpeed = Vector2.right *xSpeed + Vector2.up*ySpeed;
         ApplyVelocity(addSpeed);
-        float xToCorrect = 0;
-        float yToCorrect = 0;
-        if (currentRigidBody.velocity.x > upperSpeedLimit.x)
-        {
-            xToCorrect = upperSpeedLimit.x - currentRigidBody.velocity.x;
-            
-        }
-        if (currentRigidBody.velocity.y > upperSpeedLimit.y)
-        {
-            yToCorrect = upperSpeedLimit.y - currentRigidBody.velocity.y;
-
-        }
-
-        addSpeed = new Vector2(xToCorrect, yToCorrect);
-        ApplyVelocity(addSpeed);
-
+        LimitSpeed();
     }
 
 
@@ -73,7 +59,7 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
         Vector2 addSpeed = new Vector2();
         float xToCorrect = 0;
         float yToCorrect = 0;
-        if (isSpeedApplied == false)
+        if (isXSpeedApplied == false)
         {
             if (currentRigidBody.velocity.x != 0)
             {
@@ -86,6 +72,9 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
                     xToCorrect = stoppingForce.x;
                 }
             }
+        }
+        if (isYSpeedApplied == false)
+        {
             if (currentRigidBody.velocity.y != 0)
             {
                 if (currentRigidBody.velocity.y > 0)
@@ -98,23 +87,23 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
                 }
             }
         }
+        
         ApplyVelocity(addSpeed);
     }
 
-    protected virtual void DoPhysics()
+    protected void DoBasicPhysics()
     {
-        LimitSpeed();
-
+        StopWithoutAppliedSpeed();
     }
 
-    protected virtual void DoOtherStuff()
+    protected virtual void DoPerFrame()
     {
 
     }
     void Update()
     {
-        DoPhysics();
-        DoOtherStuff();
+        DoBasicPhysics();
+        DoPerFrame();
         
     }
 }
