@@ -10,15 +10,15 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
     protected Vector2 stoppingForce;
     protected bool isXSpeedApplied = false;
     protected bool isYSpeedApplied = false;
-    public override void Initialize(int initializedInOrder)
+    public override void Init(int initializedInOrder)
     {
-        base.Initialize(initializedInOrder);
+        base.Init(initializedInOrder);
     }
 
     // Update is called once per frame
     protected void AddSpeed(float xSpeed, float ySpeed)
     {
-        Vector2 addSpeed = Vector2.right *xSpeed + Vector2.up*ySpeed;
+        Vector2 addSpeed = new Vector2(xSpeed, ySpeed);
         ApplyVelocity(addSpeed);
         LimitSpeed();
     }
@@ -26,69 +26,40 @@ public abstract class PhysicalObjectControl : KinematicObjectControl
 
     protected void LimitSpeed()
     {
-        Vector2 addSpeed = new Vector2();
-        float xToCorrect = 0;
-        float yToCorrect = 0;
-        if (currentRigidBody.velocity.x > upperSpeedLimit.x)
-        {
-            xToCorrect = upperSpeedLimit.x - currentRigidBody.velocity.x;
+        Vector2 setSpeed = new Vector2();
+        float xCorrected = 0;
+        float yCorrected = 0;
+        xCorrected = Mathf.Clamp(currentRigidBody.velocity.x, lowerSpeedLimit.x, upperSpeedLimit.x);
+        yCorrected = Mathf.Clamp(currentRigidBody.velocity.y, lowerSpeedLimit.y, upperSpeedLimit.y);
+        
 
-        }
-        if (currentRigidBody.velocity.y > upperSpeedLimit.y)
-        {
-            yToCorrect = upperSpeedLimit.y - currentRigidBody.velocity.y;
+        setSpeed = new Vector2(xCorrected,yCorrected);
+        currentRigidBody.velocity = setSpeed;
 
-        }
-
-        if (currentRigidBody.velocity.x < lowerSpeedLimit.x)
-        {
-            xToCorrect = currentRigidBody.velocity.x - lowerSpeedLimit.x;
-
-        }
-        if (currentRigidBody.velocity.y < lowerSpeedLimit.y)
-        {
-            yToCorrect = currentRigidBody.velocity.y - lowerSpeedLimit.y;
-
-        }
-
-        addSpeed = new Vector2(xToCorrect, yToCorrect);
-        ApplyVelocity(addSpeed);
     }
     protected void StopWithoutAppliedSpeed()
     {
-        Vector2 addSpeed = new Vector2();
-        float xToCorrect = 0;
-        float yToCorrect = 0;
+        Vector2 setSpeed = new Vector2();
+        float xCorrected = 0;
+        float yCorrected = 0;
         if (isXSpeedApplied == false)
         {
             if (currentRigidBody.velocity.x != 0)
             {
-                if (currentRigidBody.velocity.x > 0)
-                {
-                    xToCorrect = -stoppingForce.x;
-                }
-                else
-                {
-                    xToCorrect = stoppingForce.x;
-                }
+                xCorrected = currentRigidBody.velocity.x/stoppingForce.x;
             }
         }
         if (isYSpeedApplied == false)
         {
             if (currentRigidBody.velocity.y != 0)
             {
-                if (currentRigidBody.velocity.y > 0)
-                {
-                    yToCorrect = -stoppingForce.y;
-                }
-                else
-                {
-                    yToCorrect = stoppingForce.y;
-                }
+                yCorrected = currentRigidBody.velocity.y/stoppingForce.y;
+
             }
         }
-        
-        ApplyVelocity(addSpeed);
+
+        setSpeed = new Vector2(xCorrected,yCorrected);
+        currentRigidBody.velocity = setSpeed;
     }
 
     protected void DoBasicPhysics()

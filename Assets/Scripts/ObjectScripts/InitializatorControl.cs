@@ -7,10 +7,17 @@ public class InitializatorControl : MonoBehaviour
     // Start is called before the first frame update
     protected List<IInitializable> toInitialize;
     [SerializeField]protected string additionalObjectsToLoad = "";
-    protected class HollowInitializable : IInitializable{}
+    protected class HollowInitializable : IInitializable{
+        public virtual void Initialize(int initializedInOrder)
+        {
+
+            Debug.Log("Not IInitializable: " + initializedInOrder.ToString());
+        }
+
+    }
     protected void PrepareDefaultObjects()
     {
-        toInitialize.Add(GameObject.Find("Player").GetComponent<IInitializable>());
+        toInitialize.Add(GameObject.Find("Player").GetComponent<PlayerBasicControl>());
     }
 
     protected void PrepareAdditionalObjects()
@@ -34,6 +41,7 @@ public class InitializatorControl : MonoBehaviour
     {
         for(int i = 0; i < this.toInitialize.Count; i++)
         {
+            Debug.Log(toInitialize.ToString());
             toInitialize[i].Initialize(i);
         }
     }
