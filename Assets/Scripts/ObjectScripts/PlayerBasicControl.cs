@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBasicControl : PhysicalObjectControl, IInitializable
 {
     // Initialize is called before the first frame update
-    [SerializeField]protected float speed =45f;
+    [SerializeField]protected float speed =200f;
     public override void Init(int initializedInOrder)
     {
         base.Init(initializedInOrder);
