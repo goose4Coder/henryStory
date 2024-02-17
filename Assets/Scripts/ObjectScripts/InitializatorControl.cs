@@ -18,6 +18,7 @@ public class InitializatorControl : MonoBehaviour
     protected void PrepareDefaultObjects()
     {
         toInitialize.Add(GameObject.Find("Player").GetComponent<PlayerBasicControl>());
+        toInitialize.Add(GameObject.Find("DialogueRootLoader").GetComponent<DialogueRootLoaderControl>());
     }
 
     protected void PrepareAdditionalObjects()
