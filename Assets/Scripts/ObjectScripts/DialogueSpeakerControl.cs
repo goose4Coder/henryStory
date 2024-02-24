@@ -7,17 +7,19 @@ public class DialogueSpeakerControl : MonoBehaviour, IInitializable, ITouchInter
 {
     // Start is called before the first frame update
     protected XmlDocument dialogueXML;
+    protected GameObject dialogueRootLoader;
     [SerializeField] protected string fileNameToLoad;
     TextAsset dialogueFile;
     public virtual void Initialize(int initializedInOrder)
     {
-        dialogueFile = (TextAsset)Resources.Load(fileNameToLoad);
+        dialogueFile = (TextAsset)Resources.Load("Dialogues/"+fileNameToLoad);
+        dialogueRootLoader = GameObject.Find("DialogueRootLoader");
         dialogueXML = new XmlDocument();
         dialogueXML.LoadXml(dialogueFile.text);
     }
-    void TouchInteract()
+    public virtual void TouchInteract()
     {
-        Debug.Log("Touched");
+        dialogueRootLoader.GetComponent<DialogueRootLoaderControl>().StartDialogue(dialogueXML);
     }
 
     // Update is called once per frame

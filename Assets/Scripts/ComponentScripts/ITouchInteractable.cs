@@ -3,7 +3,7 @@ using UnityEngine;
 public interface ITouchInteractable
 {
     // Start is called before the first frame update
-    void TouchInteract()
+    public virtual void TouchInteract()
     {
         Debug.Log("Touched");
     }

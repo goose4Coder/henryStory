@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-
+using TMPro;
 public class DialoguePlayerControl : MonoBehaviour, IInitializable
 {
     // Start is called before the first frame update
@@ -32,11 +32,17 @@ public class DialoguePlayerControl : MonoBehaviour, IInitializable
         buttonNext.GetComponent<Button>().onClick.RemoveAllListeners();
         targetNode = nodes[targetNodeIndex];
         buttonNext.SetActive(true);
-        speakerName.GetComponent<Text>().text = targetNode.Attributes.GetNamedItem("speakerName").Value;
-        textDisplayer.GetComponent<Text>().text = targetNode.Attributes.GetNamedItem("mainText").Value;
+        speakerName.SetActive(true);
+        Debug.Log(speakerName.GetComponent<TMP_Text>().text);
+        speakerName.GetComponent<TMP_Text>().text = targetNode.Attributes.GetNamedItem("speakerName").Value;
+        textDisplayer.GetComponent<TMP_Text>().text = targetNode.Attributes.GetNamedItem("mainText").Value;
         switch (targetNode.Attributes.GetNamedItem("replicaType").Value)
         {
             case "Simple":
+                targetNodeIndex += 1;
+                buttonNext.GetComponent<Button>().onClick.AddListener(useNode);
+                break;
+            case "":
                 targetNodeIndex += 1;
                 buttonNext.GetComponent<Button>().onClick.AddListener(useNode);
                 break;
