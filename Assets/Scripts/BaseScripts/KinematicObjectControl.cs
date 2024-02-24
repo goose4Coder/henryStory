@@ -19,7 +19,7 @@ public abstract class KinematicObjectControl : MonoBehaviour
 
     protected void ApplyVelocity(Vector2 velocity)
     {
-        Debug.Log("Before:"+velocity.x.ToString());
+
         this.currentVelocities.Add(velocity);
         //this.currentVelocity = velocity;
         wasVelocityApplied = false;
@@ -30,7 +30,6 @@ public abstract class KinematicObjectControl : MonoBehaviour
     {
         if (wasVelocityApplied == false)
         {
-            Debug.Log("After:" + currentVelocity.x.ToString());
             foreach(Vector2 vel in currentVelocities)
             {
                 currentRigidBody.AddForce(Vector2.right * vel.x*Time.deltaTime, ForceMode2D.Impulse);

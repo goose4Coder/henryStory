@@ -18,6 +18,8 @@ public class InitializatorControl : MonoBehaviour
     protected void PrepareDefaultObjects()
     {
         toInitialize.Add(GameObject.Find("Player").GetComponent<PlayerBasicControl>());
+        toInitialize.Add(GameObject.Find("DialogueRootLoader").GetComponent<DialogueRootLoaderControl>());
+        toInitialize.Add(GameObject.Find("DialogueUI").GetComponent<DialoguePlayerControl>());
     }
 
     protected void PrepareAdditionalObjects()
@@ -52,6 +54,7 @@ public class InitializatorControl : MonoBehaviour
         PrepareDefaultObjects();
         PrepareAdditionalObjects();
         InitializeObjects();
+        GameObject.Find("DialogueUI").SetActive(false);
 
     }
 }
