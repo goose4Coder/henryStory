@@ -1,0 +1,14 @@
+<dialogue name = "bedDialogue">
+  <node id = "0" speakerName = "???" replicaType="" mainText = "Слышь, ты что в моей кровати спишь?">
+  </node>
+  <node id = "1" speakerName = "Генри" replicaType="" mainText = "Ты кто такой?">
+  </node>
+  <node id = "2" speakerName = "Чарли" replicaType="" mainText = "Я Чарли. А это моя комната, и это моя кровать.">
+  </node>
+  <node id = "3" speakerName = "Чарли" replicaType="" mainText = "Тебя как звать то?">
+  </node>
+  <node id = "4" speakerName = "Генри" replicaType="" mainText = "Г…г…Генри.">
+  </node>
+  <node id = "5" speakerName = "Чарли"  replicaType="End" mainText = "Ну, будемс знакомы.">
+  </node>
+  </dialogue>
