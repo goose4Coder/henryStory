@@ -13,7 +13,7 @@ public class InventoryItem
         this.name = nameToSet;
         this.imageName = imageNameToLoad;
         TextAsset imageBytes= (TextAsset)Resources.Load("ItemSprites/" + imageNameToLoad);
-        this.itemImage= new Texture2D(128, 128);
+        this.itemImage= new Texture2D(320, 320);
         itemImage.LoadImage(imageBytes.bytes);
 
     }
